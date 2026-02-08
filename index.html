@@ -1047,7 +1047,11 @@ function goToScreen(num) {
 
   if (num >= 2) {
     document.getElementById('musicToggle').classList.add('visible');
-  }
+    if (!musicPlaying) {
+      document.getElementById('bgMusic').play().catch(() => {});
+      musicPlaying = true;
+      document.getElementById('musicToggle').textContent = '🎵';
+    }
 }
 
 // ============ SCREEN 2: WELCOME ============
@@ -1215,6 +1219,15 @@ function submitLove() {
     document.getElementById('foundItBtn').style.display = '';
     document.getElementById('foundItError').textContent = '';
 
+    // On last hint, highlight Found It button with arrows
+    if (currentHint === hints.length - 1) {
+      document.getElementById('foundItBtn').innerHTML = '→ → I Found It! ← ←';
+      document.getElementById('foundItBtn').style.animation = 'glowPulse 1.5s ease-in-out infinite';
+    } else {
+      document.getElementById('foundItBtn').innerHTML = 'I Found It!';
+      document.getElementById('foundItBtn').style.animation = 'none';
+    }
+
     // Show next hint button (if not last hint)
     if (currentHint < hints.length - 1) {
       const hintBtn = document.getElementById('hintBtn');
@@ -1293,7 +1306,7 @@ function pickRing(el) {
     el.classList.add('wrong');
     const wrongMsgs = [
       "Close! But not quite... try again 😘",
-      "Hmm nope! Guess again baby 💕",
+      "Hmm nope! Guess again Mahi g 💕",
       "Not that one! Keep trying 👀",
     ];
     result.textContent = wrongMsgs[Math.floor(Math.random() * wrongMsgs.length)];
@@ -1308,7 +1321,7 @@ function ringFits(fits) {
     launchConfetti();
     setTimeout(() => goToScreen(8), 3000);
   } else {
-    result.innerHTML = 'That\'s okay baby 😂💕<br><br>This is just the beginning — we\'ll find you the PERFECT ring together. This one is my promise that I\'m yours, forever. 🤍';
+    result.innerHTML = 'That\'s okay Mahi g 😂💕<br><br>This is just the beginning — we\'ll find you the PERFECT ring together. This one is my promise that I\'m yours, forever. 🤍';
     setTimeout(() => {
       const btn = document.createElement('button');
       btn.className = 'btn';
