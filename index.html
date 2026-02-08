@@ -336,6 +336,8 @@ html, body {
 /* ============ SCREEN 4: WHY I LOVE YOU ============ */
 #screen4 {
   background: radial-gradient(ellipse at 30% 70%, #1f0f2a 0%, var(--bg-deep) 70%);
+  justify-content: flex-start;
+  padding-top: 40px;
 }
 .love-title {
   font-family: 'Playfair Display', serif;
@@ -743,10 +745,8 @@ html, body {
 <!-- Music Toggle -->
 <div class="music-toggle" id="musicToggle" onclick="toggleMusic()">🎵</div>
 
-<!-- PLACEHOLDER: Add your audio file here -->
 <audio id="bgMusic" loop>
-  <!-- REPLACE: Add your romantic song mp3 file -->
-  <!-- <source src="your-song.mp3" type="audio/mpeg"> -->
+  <source src="romantic_bollywood_instrumentals.mp3" type="audio/mpeg">
 </audio>
 
 <!-- ========== SCREEN 1: PASSWORD ========== -->
@@ -790,7 +790,7 @@ html, body {
         <div class="photo-frame">
           <img src="photo1.jpg" alt="Us">
         </div>
-        <div class="photo-caption">"Where it all began... the moment that changed everything"</div>
+        <div class="photo-caption">"Our first video call... one look at your shy smile and I knew you were the one"</div>
       </div>
 
       <!-- PHOTO 2 -->
@@ -798,7 +798,7 @@ html, body {
         <div class="photo-frame">
           <img src="photo2.jpg" alt="Us">
         </div>
-        <div class="photo-caption">"Every adventure is better with you by my side"</div>
+        <div class="photo-caption">"The day I put a flower behind your ear... and you kept it forever, just like my heart"</div>
       </div>
 
       <!-- PHOTO 3 -->
@@ -806,7 +806,7 @@ html, body {
         <div class="photo-frame">
           <img src="photo3.jpg" alt="Us">
         </div>
-        <div class="photo-caption">"The little moments with you mean the most"</div>
+        <div class="photo-caption">"Officially rokafied 💕 The day you became mine and I became yours"</div>
       </div>
 
       <!-- PHOTO 4 -->
@@ -814,7 +814,7 @@ html, body {
         <div class="photo-frame">
           <img src="photo4.jpg" alt="Us">
         </div>
-        <div class="photo-caption">"You make every ordinary day feel extraordinary"</div>
+        <div class="photo-caption">"This smile... my absolute favourite thing in the entire world"</div>
       </div>
 
       <!-- PHOTO 5 -->
@@ -822,7 +822,7 @@ html, body {
         <div class="photo-frame">
           <img src="photo5.jpg" alt="Us">
         </div>
-        <div class="photo-caption">"My favorite place in the world is next to you"</div>
+        <div class="photo-caption">"The first time you cooked for me... made with love, tasted like forever"</div>
       </div>
 
       <!-- PHOTO 6 -->
@@ -830,7 +830,7 @@ html, body {
         <div class="photo-frame">
           <img src="photo6.jpg" alt="Us">
         </div>
-        <div class="photo-caption">"And this is just the beginning of forever..."</div>
+        <div class="photo-caption">"You called me in the middle of your work, just because you wanted to talk to me more... that's when I knew this was real"</div>
       </div>
 
     </div>
@@ -850,9 +850,8 @@ html, body {
   <div class="screen-inner">
     <div class="love-title">Why I Love You 💗</div>
     <div class="love-reasons" id="loveReasons">
-      <!-- REPLACE: Personalize these reasons -->
       <div class="love-line"><span class="love-emoji">💖</span> The way you laugh makes my whole world stop</div>
-      <div class="love-line"><span class="love-emoji">🌟</span> You believe in me even when I don't believe in myself</div>
+      <div class="love-line"><span class="love-emoji">🌟</span> Something about your soul makes everything feel right, you make me complete</div>
       <div class="love-line"><span class="love-emoji">🦋</span> Every moment with you feels like magic</div>
       <div class="love-gif">🥺💕</div>
       <div class="love-line"><span class="love-emoji">🔥</span> Your strength and kindness inspire me every single day</div>
@@ -932,31 +931,24 @@ html, body {
       But first — which ring do you think is MY favorite? 👀
     </div>
 
-    <!-- REPLACE: Add your ring photos as img tags inside each ring-option -->
     <div class="rings-grid" id="ringsGrid">
       <div class="ring-option" data-ring="1" onclick="pickRing(this)">
-        <div class="ring-emoji">💎</div>
+        <img src="ring1.jpg" alt="Ring 1">
         <div class="ring-label">Ring 1</div>
-        <!-- REPLACE: <img src="ring1.jpg" alt="Ring 1"> -->
       </div>
       <div class="ring-option" data-ring="2" onclick="pickRing(this)">
-        <div class="ring-emoji">✨</div>
         <div class="ring-label">Ring 2</div>
-        <!-- REPLACE: <img src="ring2.jpg" alt="Ring 2"> -->
+        <img src="ring2.jpg" alt="Ring 2">
       </div>
       <div class="ring-option" data-ring="3" onclick="pickRing(this)">
-        <div class="ring-emoji">💖</div>
         <div class="ring-label">Ring 3</div>
-        <!-- REPLACE: <img src="ring3.jpg" alt="Ring 3"> -->
+        <img src="ring3.jpg" alt="Ring 3">
       </div>
       <div class="ring-option" data-ring="4" onclick="pickRing(this)">
-        <div class="ring-emoji">🌹</div>
         <div class="ring-label">Ring 4</div>
-        <!-- REPLACE: <img src="ring4.jpg" alt="Ring 4"> -->
+        <img src="ring4.jpg" alt="Ring 4">
       </div>
     </div>
-    <!-- REPLACE: Change the number of rings or add/remove ring-option divs as needed -->
-    <!-- REPLACE: Set CORRECT_RING below in the script to match your favorite ring number -->
 
     <div class="ring-result" id="ringResult"></div>
 
@@ -976,9 +968,7 @@ html, body {
   <div class="screen-inner">
     <div class="celebration-title">Forever Starts Now</div>
     <div class="celebration-photo">
-      <!-- REPLACE: Add your favorite couple photo here -->
-      <div>👩‍❤️‍👨</div>
-      <!-- REPLACE: <img src="favorite-photo.jpg" alt="Us Forever"> -->
+      <img src="favorite-photo.jpg" alt="Us Forever">
     </div>
     <div class="celebration-msg">
       You are my today, my tomorrow, and my forever.<br>
@@ -993,13 +983,10 @@ html, body {
 
 <script>
 // ============ CONFIGURATION ============
-// REPLACE: Change this password
 const CORRECT_PASSWORD = 'MahiVey';
 
-// REPLACE: Set this to your favorite ring number (1, 2, 3, or 4)
 const CORRECT_RING = 2;
 
-// REPLACE: Change her name
 const HER_NAME = 'Mahi ♡';
 
 // ============ STATE ============
@@ -1126,6 +1113,7 @@ function showSlide(index) {
 
 // ============ SCREEN 4: LOVE REASONS ============
 function initLoveReasons() {
+  document.getElementById('screen4').scrollTop = 0;
   const lines = document.querySelectorAll('.love-line');
   lines.forEach((line, i) => {
     setTimeout(() => line.classList.add('visible'), 300 * (i + 1));
@@ -1162,7 +1150,6 @@ const hints = [
 ];
 
 // Magic characters - she must get these from you after calling/texting "I love you"
-// REPLACE: Change these to whatever secret characters you want to give her
 // One password per hint (5 hints = 5 passwords)
 const magicPasswords = ['✦', '♡', '∞', '✿', '♠'];
 let loveUnlocked = false;
