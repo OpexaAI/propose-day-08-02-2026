@@ -768,7 +768,7 @@ html, body {
 <div class="screen" id="screen2">
   <div class="screen-inner">
     <div class="welcome-text" id="welcomeText">
-      Hey baby...<br>I made something<br>just for you 🤍
+      Hi Mahi g ♡...<br>I made something<br>just for you 🤍
     </div>
     <div class="welcome-sub" id="welcomeSub">
       Take a deep breath and scroll through our story
@@ -786,21 +786,17 @@ html, body {
     <div class="photo-carousel" id="carousel">
 
       <!-- PHOTO 1 -->
-      <!-- REPLACE: Add your photo as src="your-photo-1.jpg" -->
       <div class="photo-slide active" data-index="0">
         <div class="photo-frame">
-          <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#2a1035,#1f0f2a);font-size:60px;">💑</div>
-          <!-- REPLACE: <img src="photo1.jpg" alt="Us"> -->
+          <img src="photo1.jpg" alt="Us">
         </div>
         <div class="photo-caption">"Where it all began... the moment that changed everything"</div>
-        <!-- REPLACE: Personalize this caption -->
       </div>
 
       <!-- PHOTO 2 -->
       <div class="photo-slide" data-index="1">
         <div class="photo-frame">
-          <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#1a0a2e,#2a1035);font-size:60px;">🥰</div>
-          <!-- REPLACE: <img src="photo2.jpg" alt="Us"> -->
+          <img src="photo2.jpg" alt="Us">
         </div>
         <div class="photo-caption">"Every adventure is better with you by my side"</div>
       </div>
@@ -808,8 +804,7 @@ html, body {
       <!-- PHOTO 3 -->
       <div class="photo-slide" data-index="2">
         <div class="photo-frame">
-          <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#2a1035,#0d0515);font-size:60px;">😘</div>
-          <!-- REPLACE: <img src="photo3.jpg" alt="Us"> -->
+          <img src="photo3.jpg" alt="Us">
         </div>
         <div class="photo-caption">"The little moments with you mean the most"</div>
       </div>
@@ -817,8 +812,7 @@ html, body {
       <!-- PHOTO 4 -->
       <div class="photo-slide" data-index="3">
         <div class="photo-frame">
-          <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#1f0f2a,#1a0a2e);font-size:60px;">💕</div>
-          <!-- REPLACE: <img src="photo4.jpg" alt="Us"> -->
+          <img src="photo4.jpg" alt="Us">
         </div>
         <div class="photo-caption">"You make every ordinary day feel extraordinary"</div>
       </div>
@@ -826,8 +820,7 @@ html, body {
       <!-- PHOTO 5 -->
       <div class="photo-slide" data-index="4">
         <div class="photo-frame">
-          <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#2a1035,#1f0f2a);font-size:60px;">🌹</div>
-          <!-- REPLACE: <img src="photo5.jpg" alt="Us"> -->
+          <img src="photo5.jpg" alt="Us">
         </div>
         <div class="photo-caption">"My favorite place in the world is next to you"</div>
       </div>
@@ -835,8 +828,7 @@ html, body {
       <!-- PHOTO 6 -->
       <div class="photo-slide" data-index="5">
         <div class="photo-frame">
-          <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#1a0a2e,#2a1035);font-size:60px;">✨</div>
-          <!-- REPLACE: <img src="photo6.jpg" alt="Us"> -->
+          <img src="photo6.jpg" alt="Us">
         </div>
         <div class="photo-caption">"And this is just the beginning of forever..."</div>
       </div>
@@ -1002,13 +994,13 @@ html, body {
 <script>
 // ============ CONFIGURATION ============
 // REPLACE: Change this password
-const CORRECT_PASSWORD = 'abcdef';
+const CORRECT_PASSWORD = 'MahiVey';
 
 // REPLACE: Set this to your favorite ring number (1, 2, 3, or 4)
 const CORRECT_RING = 2;
 
 // REPLACE: Change her name
-const HER_NAME = 'My Love';
+const HER_NAME = 'Mahi ♡';
 
 // ============ STATE ============
 let currentScreen = 1;
@@ -1079,10 +1071,15 @@ function initWelcome() {
 }
 
 // ============ SCREEN 3: GALLERY ============
+let galleryInitialized = false;
+
 function initGallery() {
   buildPhotoNav();
   currentSlide = 0;
   showSlide(0);
+
+  if (galleryInitialized) return;
+  galleryInitialized = true;
 
   // Swipe support
   let touchStartX = 0;
@@ -1189,7 +1186,7 @@ function submitLove() {
   const val = input.value.trim();
 
   // Determine which password is expected
-  const passwordIndex = currentHint < 0 ? 0 : currentHint;
+  const passwordIndex = currentHint < 0 ? 0 : currentHint + 1;
   const expectedPassword = magicPasswords[Math.min(passwordIndex, magicPasswords.length - 1)];
 
   if (val === expectedPassword) {
