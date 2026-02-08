@@ -1,0 +1,1443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#1a0a1e">
+<title>For You, My Love 💕</title>
+<link rel="manifest" href="manifest.json">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Quicksand:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg-deep: #0d0515;
+  --bg-dark: #1a0a1e;
+  --rose: #e8a0bf;
+  --rose-light: #f5d5e0;
+  --gold: #d4a574;
+  --gold-light: #f0d9b5;
+  --cream: #fef5ef;
+  --blush: #f9e4ec;
+  --wine: #8b2252;
+  --plum: #4a1942;
+  --text-light: #f5eef0;
+  --text-soft: #c9b8c4;
+}
+
+html, body {
+  width: 100%; height: 100%;
+  overflow: hidden;
+  font-family: 'Quicksand', sans-serif;
+  background: var(--bg-deep);
+  color: var(--text-light);
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* ============ GLOBAL PARTICLES ============ */
+.particles-bg {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  pointer-events: none; z-index: 0; overflow: hidden;
+}
+.particle {
+  position: absolute; border-radius: 50%;
+  animation: floatUp linear infinite;
+  opacity: 0;
+}
+@keyframes floatUp {
+  0% { transform: translateY(100vh) scale(0); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 0.6; }
+  100% { transform: translateY(-10vh) scale(1); opacity: 0; }
+}
+
+/* ============ SCREENS ============ */
+.screen {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  padding: 20px;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.8s ease;
+  z-index: 1;
+  overflow-y: auto;
+}
+.screen.active {
+  opacity: 1; pointer-events: all;
+}
+.screen-inner {
+  max-width: 480px; width: 100%;
+  display: flex; flex-direction: column; align-items: center;
+  text-align: center;
+}
+
+/* ============ SCREEN 1: PASSWORD ============ */
+#screen1 {
+  background: radial-gradient(ellipse at 50% 30%, #2a1035 0%, var(--bg-deep) 70%);
+}
+.lock-icon {
+  font-size: 48px; margin-bottom: 20px;
+  animation: pulse 2s ease-in-out infinite;
+}
+@keyframes pulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.15); } }
+
+.title-special {
+  font-family: 'Playfair Display', serif;
+  font-size: 28px; font-weight: 700;
+  background: linear-gradient(135deg, var(--rose), var(--gold-light));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 8px;
+}
+.subtitle {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 18px; font-style: italic;
+  color: var(--text-soft);
+  margin-bottom: 30px;
+}
+
+.password-box {
+  position: relative; width: 100%; max-width: 300px; margin-bottom: 15px;
+}
+.password-box input {
+  width: 100%; padding: 14px 20px;
+  background: rgba(255,255,255,0.06);
+  border: 1.5px solid rgba(232,160,191,0.3);
+  border-radius: 50px; outline: none;
+  color: var(--cream); font-family: 'Quicksand', sans-serif;
+  font-size: 16px; text-align: center;
+  letter-spacing: 3px;
+  transition: border-color 0.3s;
+}
+.password-box input::placeholder {
+  color: rgba(255,255,255,0.25); letter-spacing: 1px;
+}
+.password-box input:focus {
+  border-color: var(--rose);
+  box-shadow: 0 0 20px rgba(232,160,191,0.15);
+}
+
+.btn {
+  padding: 14px 40px;
+  background: linear-gradient(135deg, var(--wine), var(--plum));
+  border: 1.5px solid rgba(232,160,191,0.4);
+  border-radius: 50px; color: var(--cream);
+  font-family: 'Quicksand', sans-serif;
+  font-size: 16px; font-weight: 500;
+  cursor: pointer; transition: all 0.3s;
+  letter-spacing: 1px;
+}
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(139,34,82,0.4);
+  border-color: var(--rose);
+}
+.btn:active { transform: scale(0.97); }
+
+.error-msg {
+  color: var(--rose); font-size: 14px;
+  margin-top: 12px; min-height: 20px;
+  font-style: italic;
+}
+
+/* ============ SCREEN 2: WELCOME ============ */
+#screen2 {
+  background: radial-gradient(ellipse at 50% 50%, #1f0f2a 0%, var(--bg-deep) 70%);
+}
+.welcome-text {
+  font-family: 'Playfair Display', serif;
+  font-size: 32px; font-weight: 400;
+  line-height: 1.5;
+  opacity: 0;
+}
+.welcome-text.show { animation: fadeInUp 1s forwards; }
+.welcome-sub {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 20px; color: var(--text-soft);
+  margin-top: 15px; opacity: 0;
+  font-style: italic;
+}
+.welcome-sub.show { animation: fadeInUp 1s 0.5s forwards; }
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.heartbeat-btn {
+  margin-top: 40px; opacity: 0;
+  animation: none;
+}
+.heartbeat-btn.show {
+  animation: fadeInUp 0.8s 1.2s forwards;
+}
+.heartbeat-btn .btn {
+  animation: heartbeat 1.5s ease-in-out infinite;
+}
+@keyframes heartbeat {
+  0%, 100% { transform: scale(1); }
+  15% { transform: scale(1.08); }
+  30% { transform: scale(1); }
+  45% { transform: scale(1.05); }
+}
+
+/* Music toggle */
+.music-toggle {
+  position: fixed; top: 20px; right: 20px;
+  width: 44px; height: 44px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(232,160,191,0.3);
+  border-radius: 50%; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px; z-index: 100;
+  transition: all 0.3s;
+  opacity: 0; pointer-events: none;
+}
+.music-toggle.visible { opacity: 1; pointer-events: all; }
+.music-toggle:hover { background: rgba(232,160,191,0.15); }
+
+/* ============ SCREEN 3: PHOTO GALLERY ============ */
+#screen3 {
+  background: var(--bg-deep);
+}
+.gallery-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 26px;
+  background: linear-gradient(135deg, var(--rose), var(--gold));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 25px;
+}
+.photo-carousel {
+  width: 100%; max-width: 400px;
+  position: relative;
+}
+.photo-slide {
+  display: none;
+  flex-direction: column; align-items: center;
+  animation: fadeIn 0.6s ease;
+}
+.photo-slide.active { display: flex; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+.photo-frame {
+  width: 100%; aspect-ratio: 4/5;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 2px solid rgba(232,160,191,0.25);
+  box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+  position: relative;
+  background: rgba(255,255,255,0.03);
+}
+.photo-frame img {
+  width: 100%; height: 100%; object-fit: cover;
+}
+.photo-caption {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 18px; font-style: italic;
+  color: var(--rose-light);
+  margin-top: 18px; padding: 0 10px;
+  line-height: 1.5;
+}
+.photo-nav {
+  display: flex; gap: 12px; margin-top: 20px; align-items: center;
+}
+.photo-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: rgba(232,160,191,0.3);
+  cursor: pointer; transition: all 0.3s;
+}
+.photo-dot.active {
+  background: var(--rose);
+  transform: scale(1.3);
+}
+.gallery-next-btn { margin-top: 25px; display: none; }
+.gallery-next-btn.visible { display: block; animation: fadeInUp 0.6s forwards; }
+
+.swipe-hint {
+  display: flex; align-items: center; gap: 8px;
+  margin-top: 14px;
+  color: var(--text-soft);
+  font-size: 14px; font-style: italic;
+  animation: swipeHintPulse 2s ease-in-out infinite;
+  opacity: 0.7;
+}
+.swipe-hint.hidden { display: none; }
+.swipe-arrow {
+  display: inline-block;
+  animation: swipeArrowMove 1.5s ease-in-out infinite;
+}
+@keyframes swipeHintPulse {
+  0%,100% { opacity: 0.5; }
+  50% { opacity: 0.9; }
+}
+@keyframes swipeArrowMove {
+  0%,100% { transform: translateX(0); }
+  50% { transform: translateX(6px); }
+}
+
+/* Hint love input */
+.hint-love-section {
+  display: flex; flex-direction: column; align-items: center;
+  margin-top: 15px; width: 100%; max-width: 380px;
+}
+.hint-love-prompt {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 18px; color: var(--rose-light);
+  font-style: italic; margin-bottom: 12px;
+}
+.hint-love-input-row {
+  display: flex; gap: 10px; width: 100%;
+}
+.hint-love-input-row input {
+  flex: 1; padding: 12px 18px;
+  background: rgba(255,255,255,0.06);
+  border: 1.5px solid rgba(232,160,191,0.3);
+  border-radius: 50px; outline: none;
+  color: var(--cream); font-family: 'Quicksand', sans-serif;
+  font-size: 15px; text-align: center;
+  transition: border-color 0.3s;
+}
+.hint-love-input-row input::placeholder { color: rgba(255,255,255,0.25); }
+.hint-love-input-row input:focus {
+  border-color: var(--rose);
+  box-shadow: 0 0 15px rgba(232,160,191,0.15);
+}
+.hint-love-send {
+  padding: 12px 20px;
+  background: linear-gradient(135deg, var(--wine), var(--plum));
+  border: 1.5px solid rgba(232,160,191,0.4);
+  border-radius: 50px; color: var(--cream);
+  font-size: 18px; cursor: pointer;
+  transition: all 0.3s;
+}
+.hint-love-send:hover { border-color: var(--rose); transform: scale(1.05); }
+.hint-love-error {
+  color: var(--rose); font-size: 13px;
+  margin-top: 8px; min-height: 18px; font-style: italic;
+}
+.magic-char {
+  margin-top: 12px; padding: 10px 20px;
+  background: rgba(212,165,116,0.1);
+  border: 1px solid rgba(212,165,116,0.4);
+  border-radius: 12px;
+  font-family: 'Playfair Display', serif;
+  font-size: 18px; color: var(--gold-light);
+  display: none; animation: fadeInUp 0.5s forwards;
+}
+.magic-char.show { display: block; }
+.magic-char span.char-highlight {
+  font-size: 24px; font-weight: 700;
+  color: var(--gold);
+  margin: 0 3px;
+}
+
+/* ============ SCREEN 4: WHY I LOVE YOU ============ */
+#screen4 {
+  background: radial-gradient(ellipse at 30% 70%, #1f0f2a 0%, var(--bg-deep) 70%);
+}
+.love-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 28px;
+  background: linear-gradient(135deg, var(--gold), var(--rose));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 30px;
+}
+.love-reasons {
+  width: 100%; max-width: 400px;
+}
+.love-line {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 20px; line-height: 1.6;
+  color: var(--cream);
+  opacity: 0; transform: translateY(15px);
+  transition: all 0.6s ease;
+  margin-bottom: 16px;
+  padding: 10px 15px;
+  border-left: 2px solid transparent;
+}
+.love-line.visible {
+  opacity: 1; transform: translateY(0);
+  border-left-color: var(--rose);
+}
+.love-line .love-emoji {
+  display: inline-block;
+  margin-right: 8px;
+}
+.love-gif {
+  width: 200px; height: 150px; border-radius: 12px;
+  margin: 10px auto; overflow: hidden;
+  background: rgba(255,255,255,0.05);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 40px;
+}
+
+/* ============ SCREEN 5: THE PROPOSAL ============ */
+#screen5 {
+  background: var(--bg-deep);
+}
+.proposal-container {
+  display: flex; flex-direction: column;
+  align-items: center; gap: 10px;
+}
+.proposal-line {
+  font-family: 'Playfair Display', serif;
+  font-weight: 400;
+  opacity: 0;
+  transition: opacity 1s ease, transform 1s ease;
+  transform: translateY(20px);
+}
+.proposal-line.visible {
+  opacity: 1; transform: translateY(0);
+}
+.proposal-line:nth-child(1) { font-size: 24px; color: var(--text-soft); }
+.proposal-line:nth-child(2) { font-size: 26px; color: var(--rose-light); margin-top: 10px; }
+.proposal-line:nth-child(3) {
+  font-size: 36px; font-weight: 700;
+  background: linear-gradient(135deg, var(--rose), var(--gold), var(--rose-light));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-top: 20px;
+}
+.proposal-ring {
+  font-size: 60px; opacity: 0;
+  transition: all 1s ease;
+}
+.proposal-ring.visible {
+  opacity: 1;
+  animation: ringFloat 2s ease-in-out infinite;
+}
+@keyframes ringFloat {
+  0%,100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-10px) rotate(5deg); }
+}
+
+.proposal-buttons {
+  display: flex; gap: 15px; margin-top: 30px;
+  opacity: 0; transition: opacity 0.8s ease;
+}
+.proposal-buttons.visible { opacity: 1; }
+.btn-yes {
+  padding: 16px 45px;
+  background: linear-gradient(135deg, #c0392b, var(--wine));
+  border: 2px solid var(--rose);
+  border-radius: 50px; color: white;
+  font-family: 'Playfair Display', serif;
+  font-size: 20px; font-weight: 700;
+  cursor: pointer;
+  animation: glowPulse 2s ease-in-out infinite;
+  transition: transform 0.2s;
+}
+@keyframes glowPulse {
+  0%,100% { box-shadow: 0 0 15px rgba(232,160,191,0.3); }
+  50% { box-shadow: 0 0 35px rgba(232,160,191,0.6); }
+}
+.btn-yes:hover { transform: scale(1.05); }
+.btn-yes-also {
+  padding: 16px 35px;
+  background: rgba(255,255,255,0.06);
+  border: 1.5px solid rgba(232,160,191,0.3);
+  border-radius: 50px; color: var(--rose-light);
+  font-family: 'Quicksand', sans-serif;
+  font-size: 16px; cursor: pointer;
+  transition: all 0.3s;
+}
+.btn-yes-also:hover {
+  background: rgba(232,160,191,0.1);
+  border-color: var(--rose);
+}
+
+/* ============ SCREEN 6: TREASURE HUNT ============ */
+#screen6 {
+  background: radial-gradient(ellipse at 50% 50%, #1f0f2a 0%, var(--bg-deep) 70%);
+}
+.hunt-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 26px; color: var(--gold-light);
+  margin-bottom: 10px;
+}
+.hunt-subtitle {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 18px; color: var(--text-soft);
+  font-style: italic; margin-bottom: 25px;
+}
+.hint-card {
+  width: 100%; max-width: 380px;
+  padding: 20px 25px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(212,165,116,0.3);
+  border-radius: 16px;
+  margin-bottom: 15px;
+  min-height: 80px;
+  display: flex; align-items: center; justify-content: center;
+  text-align: center;
+}
+.hint-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px; color: var(--cream);
+  line-height: 1.5;
+}
+.hint-number {
+  font-family: 'Quicksand', sans-serif;
+  font-size: 12px; color: var(--gold);
+  letter-spacing: 3px; text-transform: uppercase;
+  margin-bottom: 12px;
+}
+.hint-btn {
+  padding: 12px 35px;
+  background: linear-gradient(135deg, rgba(212,165,116,0.3), rgba(139,34,82,0.3));
+  border: 1.5px solid rgba(212,165,116,0.4);
+  border-radius: 50px; color: var(--gold-light);
+  font-family: 'Quicksand', sans-serif;
+  font-size: 15px; cursor: pointer;
+  transition: all 0.3s; margin-top: 5px;
+}
+.hint-btn:hover {
+  background: linear-gradient(135deg, rgba(212,165,116,0.4), rgba(139,34,82,0.4));
+  box-shadow: 0 5px 20px rgba(212,165,116,0.2);
+}
+
+/* Found It section */
+.found-it-section {
+  margin-top: 20px; width: 100%; max-width: 380px;
+  display: flex; flex-direction: column; align-items: center;
+}
+.found-it-divider {
+  font-size: 13px; color: var(--text-soft);
+  margin-bottom: 12px; letter-spacing: 2px;
+}
+.found-it-prompt {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 17px; color: var(--rose-light);
+  font-style: italic; margin-bottom: 10px;
+}
+.found-it-input-area {
+  width: 100%; margin-top: 12px;
+  display: flex; flex-direction: column; align-items: center;
+}
+.found-it-question {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 19px; color: var(--gold-light);
+  margin-bottom: 12px;
+}
+
+/* ============ SCREEN 7: RING GAME ============ */
+#screen7 {
+  background: radial-gradient(ellipse at 50% 30%, #2a1035 0%, var(--bg-deep) 70%);
+  overflow-y: auto;
+}
+.ring-game-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 26px; color: var(--rose-light);
+  margin-bottom: 8px;
+}
+.ring-game-sub {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 18px; color: var(--text-soft);
+  font-style: italic; margin-bottom: 5px;
+}
+.ring-game-confession {
+  font-size: 16px; color: var(--rose);
+  margin-bottom: 20px;
+}
+.rings-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px; width: 100%; max-width: 380px;
+  margin-bottom: 15px;
+}
+.ring-option {
+  aspect-ratio: 1;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 2px solid rgba(232,160,191,0.2);
+  cursor: pointer;
+  transition: all 0.3s;
+  position: relative;
+  background: rgba(255,255,255,0.04);
+  display: flex; align-items: center; justify-content: center;
+  flex-direction: column;
+}
+.ring-option:hover {
+  border-color: var(--rose);
+  transform: scale(1.03);
+  box-shadow: 0 5px 20px rgba(232,160,191,0.2);
+}
+.ring-option.selected {
+  border-color: var(--gold);
+  box-shadow: 0 0 25px rgba(212,165,116,0.4);
+}
+.ring-option.wrong {
+  animation: shake 0.5s ease;
+  border-color: rgba(255,100,100,0.5);
+}
+@keyframes shake {
+  0%,100% { transform: translateX(0); }
+  25% { transform: translateX(-8px); }
+  75% { transform: translateX(8px); }
+}
+.ring-option img {
+  width: 80%; height: 80%; object-fit: contain;
+}
+.ring-label {
+  font-size: 13px; color: var(--text-soft);
+  margin-top: 5px;
+}
+.ring-emoji {
+  font-size: 50px;
+}
+.ring-result {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 20px; color: var(--cream);
+  margin: 15px 0; min-height: 30px;
+  font-style: italic;
+}
+
+/* Try-on section */
+.tryon-section {
+  display: none;
+  flex-direction: column; align-items: center;
+  animation: fadeInUp 0.8s forwards;
+}
+.tryon-section.show { display: flex; }
+.tryon-question {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px; color: var(--gold-light);
+  margin: 15px 0;
+}
+.tryon-buttons { display: flex; gap: 12px; margin-top: 10px; }
+.tryon-result {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 20px; line-height: 1.6;
+  color: var(--cream);
+  margin-top: 15px; padding: 15px;
+  max-width: 350px;
+}
+
+/* ============ SCREEN 8: CELEBRATION ============ */
+#screen8 {
+  background: radial-gradient(ellipse at 50% 50%, #2a1035 0%, var(--bg-deep) 70%);
+}
+.celebration-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 36px; font-weight: 700;
+  background: linear-gradient(135deg, var(--rose), var(--gold), var(--rose-light), var(--gold));
+  background-size: 300% 300%;
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradientShift 4s ease-in-out infinite;
+  margin-bottom: 20px;
+}
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+.celebration-photo {
+  width: 250px; height: 250px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 3px solid var(--rose);
+  box-shadow: 0 0 40px rgba(232,160,191,0.3);
+  margin-bottom: 20px;
+  background: rgba(255,255,255,0.05);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 60px;
+}
+.celebration-photo img {
+  width: 100%; height: 100%; object-fit: cover;
+}
+.celebration-msg {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px; font-style: italic;
+  color: var(--rose-light);
+  line-height: 1.6;
+  max-width: 350px;
+}
+.celebration-date {
+  font-family: 'Quicksand', sans-serif;
+  font-size: 14px; color: var(--gold);
+  letter-spacing: 3px; margin-top: 20px;
+  text-transform: uppercase;
+}
+.forever-hearts {
+  font-size: 30px; margin-top: 15px;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+/* ============ CONFETTI ============ */
+.confetti-container {
+  position: fixed; top: 0; left: 0;
+  width: 100%; height: 100%;
+  pointer-events: none; z-index: 1000;
+  overflow: hidden;
+}
+.confetti-piece {
+  position: absolute; top: -10px;
+  width: 10px; height: 10px;
+  animation: confettiFall linear forwards;
+}
+@keyframes confettiFall {
+  0% { transform: translateY(-10px) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+}
+
+/* ============ FALLING HEARTS OVERLAY ============ */
+.hearts-overlay {
+  position: fixed; top: 0; left: 0;
+  width: 100%; height: 100%;
+  pointer-events: none; z-index: 999;
+  overflow: hidden; display: none;
+}
+.hearts-overlay.active { display: block; }
+.falling-heart {
+  position: absolute; top: -30px;
+  font-size: 20px;
+  animation: heartFall linear infinite;
+  opacity: 0.7;
+}
+@keyframes heartFall {
+  0% { transform: translateY(-30px) rotate(0deg); opacity: 0.7; }
+  100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+}
+
+/* ============ TYPEWRITER ============ */
+.typewriter {
+  overflow: hidden;
+  border-right: 2px solid var(--rose);
+  white-space: nowrap;
+  animation: typing 3s steps(40) forwards, blink 0.8s step-end infinite;
+  width: 0;
+}
+@keyframes typing { to { width: 100%; } }
+@keyframes blink { 50% { border-color: transparent; } }
+
+/* ============ RESPONSIVE ============ */
+@media (max-width: 400px) {
+  .title-special { font-size: 24px; }
+  .proposal-line:nth-child(3) { font-size: 28px; }
+  .celebration-title { font-size: 28px; }
+  .rings-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .photo-frame { aspect-ratio: 3/4; }
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(232,160,191,0.3); border-radius: 2px; }
+</style>
+</head>
+<body>
+
+<!-- Floating particles background -->
+<div class="particles-bg" id="particles"></div>
+
+<!-- Falling hearts overlay -->
+<div class="hearts-overlay" id="heartsOverlay"></div>
+
+<!-- Confetti container -->
+<div class="confetti-container" id="confettiContainer"></div>
+
+<!-- Music Toggle -->
+<div class="music-toggle" id="musicToggle" onclick="toggleMusic()">🎵</div>
+
+<!-- PLACEHOLDER: Add your audio file here -->
+<audio id="bgMusic" loop>
+  <!-- REPLACE: Add your romantic song mp3 file -->
+  <!-- <source src="your-song.mp3" type="audio/mpeg"> -->
+</audio>
+
+<!-- ========== SCREEN 1: PASSWORD ========== -->
+<div class="screen active" id="screen1">
+  <div class="screen-inner">
+    <div class="lock-icon">💌</div>
+    <div class="title-special">This Is For Someone Very Special</div>
+    <div class="subtitle">Only she knows the key to my heart...</div>
+    <div style="font-size:13px;color:var(--text-soft);margin-bottom:18px;font-style:italic;">Hint: our hashtag 💕</div>
+    <div class="password-box">
+      <input type="password" id="passwordInput" placeholder="Enter the password" onkeypress="if(event.key==='Enter')checkPassword()">
+    </div>
+    <button class="btn" onclick="checkPassword()">Open My Heart</button>
+    <div class="error-msg" id="errorMsg"></div>
+  </div>
+</div>
+
+<!-- ========== SCREEN 2: WELCOME ========== -->
+<div class="screen" id="screen2">
+  <div class="screen-inner">
+    <div class="welcome-text" id="welcomeText">
+      Hey baby...<br>I made something<br>just for you 🤍
+    </div>
+    <div class="welcome-sub" id="welcomeSub">
+      Take a deep breath and scroll through our story
+    </div>
+    <div class="heartbeat-btn" id="continueBtn">
+      <button class="btn" onclick="goToScreen(3)">Continue 💕</button>
+    </div>
+  </div>
+</div>
+
+<!-- ========== SCREEN 3: PHOTO GALLERY ========== -->
+<div class="screen" id="screen3">
+  <div class="screen-inner">
+    <div class="gallery-title">Our Story ✨</div>
+    <div class="photo-carousel" id="carousel">
+
+      <!-- PHOTO 1 -->
+      <!-- REPLACE: Add your photo as src="your-photo-1.jpg" -->
+      <div class="photo-slide active" data-index="0">
+        <div class="photo-frame">
+          <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#2a1035,#1f0f2a);font-size:60px;">💑</div>
+          <!-- REPLACE: <img src="photo1.jpg" alt="Us"> -->
+        </div>
+        <div class="photo-caption">"Where it all began... the moment that changed everything"</div>
+        <!-- REPLACE: Personalize this caption -->
+      </div>
+
+      <!-- PHOTO 2 -->
+      <div class="photo-slide" data-index="1">
+        <div class="photo-frame">
+          <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#1a0a2e,#2a1035);font-size:60px;">🥰</div>
+          <!-- REPLACE: <img src="photo2.jpg" alt="Us"> -->
+        </div>
+        <div class="photo-caption">"Every adventure is better with you by my side"</div>
+      </div>
+
+      <!-- PHOTO 3 -->
+      <div class="photo-slide" data-index="2">
+        <div class="photo-frame">
+          <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#2a1035,#0d0515);font-size:60px;">😘</div>
+          <!-- REPLACE: <img src="photo3.jpg" alt="Us"> -->
+        </div>
+        <div class="photo-caption">"The little moments with you mean the most"</div>
+      </div>
+
+      <!-- PHOTO 4 -->
+      <div class="photo-slide" data-index="3">
+        <div class="photo-frame">
+          <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#1f0f2a,#1a0a2e);font-size:60px;">💕</div>
+          <!-- REPLACE: <img src="photo4.jpg" alt="Us"> -->
+        </div>
+        <div class="photo-caption">"You make every ordinary day feel extraordinary"</div>
+      </div>
+
+      <!-- PHOTO 5 -->
+      <div class="photo-slide" data-index="4">
+        <div class="photo-frame">
+          <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#2a1035,#1f0f2a);font-size:60px;">🌹</div>
+          <!-- REPLACE: <img src="photo5.jpg" alt="Us"> -->
+        </div>
+        <div class="photo-caption">"My favorite place in the world is next to you"</div>
+      </div>
+
+      <!-- PHOTO 6 -->
+      <div class="photo-slide" data-index="5">
+        <div class="photo-frame">
+          <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#1a0a2e,#2a1035);font-size:60px;">✨</div>
+          <!-- REPLACE: <img src="photo6.jpg" alt="Us"> -->
+        </div>
+        <div class="photo-caption">"And this is just the beginning of forever..."</div>
+      </div>
+
+    </div>
+    <div class="photo-nav" id="photoNav"></div>
+    <div class="swipe-hint" id="swipeHint">
+      <span>Swipe or tap to see more</span>
+      <span class="swipe-arrow">→</span>
+    </div>
+    <div class="gallery-next-btn" id="galleryNextBtn">
+      <button class="btn" onclick="goToScreen(4)">Keep Going 💫</button>
+    </div>
+  </div>
+</div>
+
+<!-- ========== SCREEN 4: WHY I LOVE YOU ========== -->
+<div class="screen" id="screen4">
+  <div class="screen-inner">
+    <div class="love-title">Why I Love You 💗</div>
+    <div class="love-reasons" id="loveReasons">
+      <!-- REPLACE: Personalize these reasons -->
+      <div class="love-line"><span class="love-emoji">💖</span> The way you laugh makes my whole world stop</div>
+      <div class="love-line"><span class="love-emoji">🌟</span> You believe in me even when I don't believe in myself</div>
+      <div class="love-line"><span class="love-emoji">🦋</span> Every moment with you feels like magic</div>
+      <div class="love-gif">🥺💕</div>
+      <div class="love-line"><span class="love-emoji">🔥</span> Your strength and kindness inspire me every single day</div>
+      <div class="love-line"><span class="love-emoji">🌙</span> You're my first thought in the morning and my last at night</div>
+      <div class="love-line"><span class="love-emoji">💫</span> You make me want to be the best version of myself</div>
+      <div class="love-gif">😍🤗</div>
+      <div class="love-line"><span class="love-emoji">🤍</span> I can't imagine my life without you in it</div>
+      <div class="love-line"><span class="love-emoji">💍</span> You're my person. My forever. My everything.</div>
+    </div>
+    <button class="btn" style="margin-top:25px;" onclick="goToScreen(5)">There's Something I Need to Ask You...</button>
+  </div>
+</div>
+
+<!-- ========== SCREEN 5: THE PROPOSAL ========== -->
+<div class="screen" id="screen5">
+  <div class="screen-inner">
+    <div class="proposal-container" id="proposalContainer">
+      <div class="proposal-ring" id="proposalRing">💍</div>
+      <div class="proposal-line">My Love...</div>
+      <div class="proposal-line">Will you be forever mine, always?</div>
+      <div class="proposal-line">Will You Marry Me?</div>
+      <div class="proposal-buttons" id="proposalButtons">
+        <button class="btn-yes" onclick="shesSaidYes()">YES! 💍</button>
+        <button class="btn-yes-also" onclick="shesSaidYes()">Also Yes 😂</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== SCREEN 6: TREASURE HUNT ========== -->
+<div class="screen" id="screen6">
+  <div class="screen-inner">
+    <div class="hunt-title">Wait... There's More 👀</div>
+    <div class="hunt-subtitle">I have a surprise hidden for you. Follow the hints!<br>But each hint has a price... 💕</div>
+    <div class="hint-card" id="hintCard" style="display:none;">
+      <div>
+        <div class="hint-number" id="hintNumber">Hint 1 of 5</div>
+        <div class="hint-text" id="hintText"></div>
+      </div>
+    </div>
+    <div class="magic-char" id="magicChar"></div>
+    <div class="hint-love-section" id="hintLoveSection">
+      <div class="hint-love-prompt" id="hintLovePrompt">Call me or text me and tell me "I love you" 📱💕<br><span style="font-size:15px;color:var(--text-soft);">I'll give you a magic character to unlock the first hint</span></div>
+      <div class="hint-love-input-row">
+        <input type="text" id="loveInput" placeholder="Enter magic character..." onkeypress="if(event.key==='Enter')submitLove()">
+        <button class="hint-love-send" onclick="submitLove()">🔓</button>
+      </div>
+      <div class="hint-love-error" id="loveError"></div>
+    </div>
+
+    <!-- Found It section - always visible below each hint -->
+    <div class="found-it-section" id="foundItSection" style="display:none;">
+      <div class="found-it-divider">— or —</div>
+      <div class="found-it-prompt">Think you already found it? 👀</div>
+      <button class="hint-btn" id="foundItBtn" onclick="showFoundItInput()">I Found It!</button>
+      <div class="found-it-input-area" id="foundItInputArea" style="display:none;">
+        <div class="found-it-question">What did you find? 🤔</div>
+        <div class="hint-love-input-row">
+          <input type="text" id="foundItAnswer" placeholder="Tell me what you found..." onkeypress="if(event.key==='Enter')checkFoundIt()">
+          <button class="hint-love-send" onclick="checkFoundIt()">✨</button>
+        </div>
+        <div class="hint-love-error" id="foundItError"></div>
+      </div>
+    </div>
+
+    <button class="hint-btn" id="hintBtn" onclick="nextHint()" style="display:none;">Next Hint 🔍</button>
+  </div>
+</div>
+
+<!-- ========== SCREEN 7: RING GAME ========== -->
+<div class="screen" id="screen7">
+  <div class="screen-inner" style="padding-bottom:40px;">
+    <div class="ring-game-title">You Found Them! 🎉</div>
+    <div class="ring-game-sub">Now for a little game...</div>
+    <div class="ring-game-confession">
+      Okay confession... I have NO idea what your ring size is 😅<br>
+      But first — which ring do you think is MY favorite? 👀
+    </div>
+
+    <!-- REPLACE: Add your ring photos as img tags inside each ring-option -->
+    <div class="rings-grid" id="ringsGrid">
+      <div class="ring-option" data-ring="1" onclick="pickRing(this)">
+        <div class="ring-emoji">💎</div>
+        <div class="ring-label">Ring 1</div>
+        <!-- REPLACE: <img src="ring1.jpg" alt="Ring 1"> -->
+      </div>
+      <div class="ring-option" data-ring="2" onclick="pickRing(this)">
+        <div class="ring-emoji">✨</div>
+        <div class="ring-label">Ring 2</div>
+        <!-- REPLACE: <img src="ring2.jpg" alt="Ring 2"> -->
+      </div>
+      <div class="ring-option" data-ring="3" onclick="pickRing(this)">
+        <div class="ring-emoji">💖</div>
+        <div class="ring-label">Ring 3</div>
+        <!-- REPLACE: <img src="ring3.jpg" alt="Ring 3"> -->
+      </div>
+      <div class="ring-option" data-ring="4" onclick="pickRing(this)">
+        <div class="ring-emoji">🌹</div>
+        <div class="ring-label">Ring 4</div>
+        <!-- REPLACE: <img src="ring4.jpg" alt="Ring 4"> -->
+      </div>
+    </div>
+    <!-- REPLACE: Change the number of rings or add/remove ring-option divs as needed -->
+    <!-- REPLACE: Set CORRECT_RING below in the script to match your favorite ring number -->
+
+    <div class="ring-result" id="ringResult"></div>
+
+    <div class="tryon-section" id="tryonSection">
+      <div class="tryon-question">Now try it on... does it fit? 🤞</div>
+      <div class="tryon-buttons">
+        <button class="btn-yes" style="font-size:16px;padding:14px 30px;" onclick="ringFits(true)">It fits! 💍🥹</button>
+        <button class="btn-yes-also" onclick="ringFits(false)">Not quite 😂</button>
+      </div>
+      <div class="tryon-result" id="tryonResult"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== SCREEN 8: CELEBRATION ========== -->
+<div class="screen" id="screen8">
+  <div class="screen-inner">
+    <div class="celebration-title">Forever Starts Now</div>
+    <div class="celebration-photo">
+      <!-- REPLACE: Add your favorite couple photo here -->
+      <div>👩‍❤️‍👨</div>
+      <!-- REPLACE: <img src="favorite-photo.jpg" alt="Us Forever"> -->
+    </div>
+    <div class="celebration-msg">
+      You are my today, my tomorrow, and my forever.<br>
+      I promise to love you, cherish you, and stand by your side<br>
+      through every chapter of our story. 🤍
+    </div>
+    <div class="celebration-date" id="celebrationDate"></div>
+    <div class="forever-hearts">💍 💕 💍</div>
+    <button class="btn" style="margin-top:25px;" onclick="restartLove()">Replay Our Story 🔁</button>
+  </div>
+</div>
+
+<script>
+// ============ CONFIGURATION ============
+// REPLACE: Change this password
+const CORRECT_PASSWORD = 'abcdef';
+
+// REPLACE: Set this to your favorite ring number (1, 2, 3, or 4)
+const CORRECT_RING = 2;
+
+// REPLACE: Change her name
+const HER_NAME = 'My Love';
+
+// ============ STATE ============
+let currentScreen = 1;
+let currentSlide = 0;
+let currentHint = 0;
+let musicPlaying = false;
+const totalSlides = document.querySelectorAll('.photo-slide').length;
+
+// ============ PARTICLES ============
+function createParticles() {
+  const container = document.getElementById('particles');
+  const colors = ['rgba(232,160,191,0.4)', 'rgba(212,165,116,0.3)', 'rgba(245,213,224,0.2)'];
+  for (let i = 0; i < 30; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    p.style.left = Math.random() * 100 + '%';
+    p.style.width = p.style.height = (Math.random() * 4 + 2) + 'px';
+    p.style.background = colors[Math.floor(Math.random() * colors.length)];
+    p.style.animationDuration = (Math.random() * 8 + 6) + 's';
+    p.style.animationDelay = (Math.random() * 10) + 's';
+    container.appendChild(p);
+  }
+}
+createParticles();
+
+// ============ PASSWORD ============
+function checkPassword() {
+  const input = document.getElementById('passwordInput').value;
+  const errorMsg = document.getElementById('errorMsg');
+  if (input === CORRECT_PASSWORD) {
+    errorMsg.textContent = '';
+    goToScreen(2);
+  } else {
+    errorMsg.textContent = 'Nice try, but this isn\'t for you 😏';
+    document.getElementById('passwordInput').value = '';
+    document.getElementById('passwordInput').style.borderColor = '#e74c3c';
+    setTimeout(() => {
+      document.getElementById('passwordInput').style.borderColor = 'rgba(232,160,191,0.3)';
+    }, 1500);
+  }
+}
+
+// ============ SCREEN TRANSITIONS ============
+function goToScreen(num) {
+  document.getElementById('screen' + currentScreen).classList.remove('active');
+  currentScreen = num;
+  const nextScreen = document.getElementById('screen' + num);
+  nextScreen.classList.add('active');
+
+  // Trigger screen-specific animations
+  if (num === 2) initWelcome();
+  if (num === 3) initGallery();
+  if (num === 4) initLoveReasons();
+  if (num === 5) initProposal();
+  if (num === 6) initHunt();
+  if (num === 8) initCelebration();
+
+  if (num >= 2) {
+    document.getElementById('musicToggle').classList.add('visible');
+  }
+}
+
+// ============ SCREEN 2: WELCOME ============
+function initWelcome() {
+  setTimeout(() => document.getElementById('welcomeText').classList.add('show'), 200);
+  setTimeout(() => document.getElementById('welcomeSub').classList.add('show'), 800);
+  setTimeout(() => document.getElementById('continueBtn').classList.add('show'), 1500);
+}
+
+// ============ SCREEN 3: GALLERY ============
+function initGallery() {
+  buildPhotoNav();
+  currentSlide = 0;
+  showSlide(0);
+
+  // Swipe support
+  let touchStartX = 0;
+  const carousel = document.getElementById('carousel');
+  carousel.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; });
+  carousel.addEventListener('touchend', e => {
+    const diff = touchStartX - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 50) {
+      if (diff > 0 && currentSlide < totalSlides - 1) showSlide(currentSlide + 1);
+      else if (diff < 0 && currentSlide > 0) showSlide(currentSlide - 1);
+    }
+  });
+}
+
+function buildPhotoNav() {
+  const nav = document.getElementById('photoNav');
+  nav.innerHTML = '';
+  for (let i = 0; i < totalSlides; i++) {
+    const dot = document.createElement('div');
+    dot.className = 'photo-dot' + (i === 0 ? ' active' : '');
+    dot.onclick = () => showSlide(i);
+    nav.appendChild(dot);
+  }
+}
+
+function showSlide(index) {
+  currentSlide = index;
+  document.querySelectorAll('.photo-slide').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.photo-dot').forEach(d => d.classList.remove('active'));
+  document.querySelectorAll('.photo-slide')[index].classList.add('active');
+  document.querySelectorAll('.photo-dot')[index].classList.add('active');
+
+  // Show "Keep Going" button only on last slide
+  const nextBtn = document.getElementById('galleryNextBtn');
+  const swipeHint = document.getElementById('swipeHint');
+  if (index === totalSlides - 1) {
+    nextBtn.classList.add('visible');
+    swipeHint.classList.add('hidden');
+  } else {
+    nextBtn.classList.remove('visible');
+    swipeHint.classList.remove('hidden');
+  }
+}
+
+// ============ SCREEN 4: LOVE REASONS ============
+function initLoveReasons() {
+  const lines = document.querySelectorAll('.love-line');
+  lines.forEach((line, i) => {
+    setTimeout(() => line.classList.add('visible'), 300 * (i + 1));
+  });
+}
+
+// ============ SCREEN 5: PROPOSAL ============
+function initProposal() {
+  const lines = document.querySelectorAll('.proposal-line');
+  const ring = document.getElementById('proposalRing');
+  const buttons = document.getElementById('proposalButtons');
+
+  // Dramatic dark pause
+  setTimeout(() => ring.classList.add('visible'), 800);
+  lines.forEach((line, i) => {
+    setTimeout(() => line.classList.add('visible'), 1800 + (i * 1200));
+  });
+  setTimeout(() => buttons.classList.add('visible'), 1800 + (lines.length * 1200) + 500);
+}
+
+function shesSaidYes() {
+  launchConfetti();
+  startFallingHearts();
+  setTimeout(() => goToScreen(6), 2500);
+}
+
+// ============ SCREEN 6: TREASURE HUNT ============
+const hints = [
+  "I've hidden something very special for you somewhere close... 🎁",
+  "Think about where you step into adventure... 👟",
+  "Not just any pair... the ones with the ⭐ on the sole...",
+  "Not left... but ___ 😏",
+  "Check the RIGHT shoe, inside the Converse box. Open it. ✨"
+];
+
+// Magic characters - she must get these from you after calling/texting "I love you"
+// REPLACE: Change these to whatever secret characters you want to give her
+// One password per hint (5 hints = 5 passwords)
+const magicPasswords = ['✦', '♡', '∞', '✿', '♠'];
+let loveUnlocked = false;
+
+function initHunt() {
+  currentHint = -1; // No hint shown yet
+  loveUnlocked = false;
+  document.getElementById('hintCard').style.display = 'none';
+  document.getElementById('foundItSection').style.display = 'none';
+  document.getElementById('hintBtn').style.display = 'none';
+  document.getElementById('hintLoveSection').style.display = '';
+  document.getElementById('magicChar').classList.remove('show');
+  document.getElementById('loveInput').value = '';
+  document.getElementById('loveError').textContent = '';
+  document.getElementById('hintLovePrompt').innerHTML = `Call me or text me and tell me "I love you" 📱💕<br><span style="font-size:15px;color:var(--text-soft);">I'll give you a magic character to unlock the first hint</span>`;
+}
+
+function submitLove() {
+  const input = document.getElementById('loveInput');
+  const error = document.getElementById('loveError');
+  const val = input.value.trim();
+
+  // Determine which password is expected
+  const passwordIndex = currentHint < 0 ? 0 : currentHint;
+  const expectedPassword = magicPasswords[Math.min(passwordIndex, magicPasswords.length - 1)];
+
+  if (val === expectedPassword) {
+    error.textContent = '';
+    input.value = '';
+    loveUnlocked = true;
+
+    // Show success
+    const magicEl = document.getElementById('magicChar');
+    magicEl.innerHTML = `Unlocked! 💕`;
+    magicEl.classList.add('show');
+
+    // Hide love input
+    document.getElementById('hintLoveSection').style.display = 'none';
+
+    // Reveal the hint
+    currentHint = currentHint < 0 ? 0 : currentHint + 1;
+
+    if (currentHint >= hints.length) {
+      // All hints exhausted, go to ring game
+      goToScreen(7);
+      return;
+    }
+
+    // Show the hint card
+    document.getElementById('hintCard').style.display = '';
+    document.getElementById('hintNumber').textContent = `Hint ${currentHint + 1} of ${hints.length}`;
+    document.getElementById('hintText').textContent = hints[currentHint];
+
+    // Animate hint card
+    const card = document.getElementById('hintCard');
+    card.style.animation = 'none';
+    card.offsetHeight;
+    card.style.animation = 'fadeIn 0.5s ease';
+
+    // Show "Found It" and "Next Hint" options
+    document.getElementById('foundItSection').style.display = '';
+    document.getElementById('foundItInputArea').style.display = 'none';
+    document.getElementById('foundItBtn').style.display = '';
+    document.getElementById('foundItError').textContent = '';
+
+    // Show next hint button (if not last hint)
+    if (currentHint < hints.length - 1) {
+      const hintBtn = document.getElementById('hintBtn');
+      hintBtn.style.display = '';
+      hintBtn.textContent = 'Need Another Hint 🔍';
+      hintBtn.onclick = function() {
+        // Need to call/text again for next hint
+        loveUnlocked = false;
+        document.getElementById('hintBtn').style.display = 'none';
+        document.getElementById('foundItSection').style.display = 'none';
+        document.getElementById('magicChar').classList.remove('show');
+        document.getElementById('hintLoveSection').style.display = '';
+        document.getElementById('loveInput').value = '';
+        document.getElementById('loveError').textContent = '';
+        document.getElementById('hintLovePrompt').innerHTML = `Call me or text me and tell me "I love you" again 📱💕<br><span style="font-size:15px;color:var(--text-soft);">I'll give you the next magic character</span>`;
+      };
+    } else {
+      document.getElementById('hintBtn').style.display = 'none';
+    }
+
+  } else {
+    error.textContent = "That's not it... did you call me yet? 📱😘";
+    input.value = '';
+    input.style.borderColor = 'rgba(255,100,100,0.5)';
+    setTimeout(() => { input.style.borderColor = 'rgba(232,160,191,0.3)'; }, 1200);
+  }
+}
+
+function showFoundItInput() {
+  document.getElementById('foundItBtn').style.display = 'none';
+  document.getElementById('foundItInputArea').style.display = '';
+  document.getElementById('foundItAnswer').value = '';
+  document.getElementById('foundItError').textContent = '';
+  document.getElementById('foundItAnswer').focus();
+}
+
+function checkFoundIt() {
+  const input = document.getElementById('foundItAnswer');
+  const error = document.getElementById('foundItError');
+  const val = input.value.trim().toLowerCase();
+
+  // Accept variations of "rings" / "ring"
+  const accepted = ['rings', 'ring', 'the rings', 'the ring', 'a ring', 'some rings'];
+  if (accepted.some(a => val === a || val.includes('ring'))) {
+    error.textContent = '';
+    // She found it! Go to ring game
+    launchConfetti();
+    setTimeout(() => goToScreen(7), 1200);
+  } else {
+    error.textContent = "Hmm, that's not it... keep looking! 😘";
+    input.value = '';
+    input.style.borderColor = 'rgba(255,100,100,0.5)';
+    setTimeout(() => { input.style.borderColor = 'rgba(232,160,191,0.3)'; }, 1200);
+  }
+}
+
+// ============ SCREEN 7: RING GAME ============
+function pickRing(el) {
+  const ringNum = parseInt(el.dataset.ring);
+  const result = document.getElementById('ringResult');
+
+  // Clear previous selections
+  document.querySelectorAll('.ring-option').forEach(r => {
+    r.classList.remove('selected', 'wrong');
+  });
+
+  if (ringNum === CORRECT_RING) {
+    el.classList.add('selected');
+    result.innerHTML = 'You know me SO well 😍<br>That\'s the one! Now try it on!';
+    result.style.color = 'var(--gold-light)';
+
+    setTimeout(() => {
+      document.getElementById('tryonSection').classList.add('show');
+    }, 800);
+  } else {
+    el.classList.add('wrong');
+    const wrongMsgs = [
+      "Close! But not quite... try again 😘",
+      "Hmm nope! Guess again baby 💕",
+      "Not that one! Keep trying 👀",
+    ];
+    result.textContent = wrongMsgs[Math.floor(Math.random() * wrongMsgs.length)];
+    result.style.color = 'var(--rose)';
+  }
+}
+
+function ringFits(fits) {
+  const result = document.getElementById('tryonResult');
+  if (fits) {
+    result.innerHTML = '🎉 It was meant to be! Just like us! 💍<br><br>This ring is my promise to you — forever and always.';
+    launchConfetti();
+    setTimeout(() => goToScreen(8), 3000);
+  } else {
+    result.innerHTML = 'That\'s okay baby 😂💕<br><br>This is just the beginning — we\'ll find you the PERFECT ring together. This one is my promise that I\'m yours, forever. 🤍';
+    setTimeout(() => {
+      const btn = document.createElement('button');
+      btn.className = 'btn';
+      btn.style.marginTop = '20px';
+      btn.textContent = 'Forever Starts Now 💍';
+      btn.onclick = () => goToScreen(8);
+      document.getElementById('tryonSection').appendChild(btn);
+    }, 1500);
+  }
+}
+
+// ============ SCREEN 8: CELEBRATION ============
+function initCelebration() {
+  launchConfetti();
+  startFallingHearts();
+  const today = new Date();
+  const options = { year: 'numeric', month: 'long', day: 'numeric' };
+  document.getElementById('celebrationDate').textContent =
+    '💕 ' + today.toLocaleDateString('en-US', options) + ' 💕';
+}
+
+function restartLove() {
+  stopFallingHearts();
+  // Reset all animations
+  document.querySelectorAll('.welcome-text, .welcome-sub, .heartbeat-btn').forEach(el => el.classList.remove('show'));
+  document.querySelectorAll('.proposal-line, .proposal-ring').forEach(el => el.classList.remove('visible'));
+  document.getElementById('proposalButtons').classList.remove('visible');
+  document.querySelectorAll('.love-line').forEach(el => el.classList.remove('visible'));
+  document.getElementById('tryonSection').classList.remove('show');
+  document.getElementById('ringResult').textContent = '';
+  document.getElementById('tryonResult').textContent = '';
+  document.querySelectorAll('.ring-option').forEach(r => r.classList.remove('selected', 'wrong'));
+  document.getElementById('magicChar').classList.remove('show');
+  document.getElementById('hintLoveSection').style.display = '';
+  document.getElementById('foundItSection').style.display = 'none';
+  document.getElementById('foundItInputArea').style.display = 'none';
+  document.getElementById('hintCard').style.display = 'none';
+  goToScreen(1);
+}
+
+// ============ CONFETTI ============
+function launchConfetti() {
+  const container = document.getElementById('confettiContainer');
+  const colors = ['#e8a0bf', '#d4a574', '#f5d5e0', '#ffd700', '#ff69b4', '#fff', '#f0d9b5'];
+  const shapes = ['square', 'circle'];
+
+  for (let i = 0; i < 100; i++) {
+    const piece = document.createElement('div');
+    piece.className = 'confetti-piece';
+    const color = colors[Math.floor(Math.random() * colors.length)];
+    const shape = shapes[Math.floor(Math.random() * shapes.length)];
+    piece.style.left = Math.random() * 100 + '%';
+    piece.style.background = color;
+    piece.style.borderRadius = shape === 'circle' ? '50%' : '2px';
+    piece.style.width = (Math.random() * 8 + 5) + 'px';
+    piece.style.height = (Math.random() * 8 + 5) + 'px';
+    piece.style.animationDuration = (Math.random() * 2 + 2) + 's';
+    piece.style.animationDelay = (Math.random() * 1.5) + 's';
+    container.appendChild(piece);
+  }
+
+  setTimeout(() => { container.innerHTML = ''; }, 5000);
+}
+
+// ============ FALLING HEARTS ============
+let heartsInterval;
+function startFallingHearts() {
+  const overlay = document.getElementById('heartsOverlay');
+  overlay.classList.add('active');
+  const hearts = ['💕', '💖', '💗', '💓', '❤️', '🤍', '💍', '✨'];
+
+  heartsInterval = setInterval(() => {
+    const heart = document.createElement('div');
+    heart.className = 'falling-heart';
+    heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+    heart.style.left = Math.random() * 100 + '%';
+    heart.style.fontSize = (Math.random() * 15 + 12) + 'px';
+    heart.style.animationDuration = (Math.random() * 3 + 3) + 's';
+    overlay.appendChild(heart);
+
+    setTimeout(() => heart.remove(), 6000);
+  }, 300);
+}
+
+function stopFallingHearts() {
+  clearInterval(heartsInterval);
+  const overlay = document.getElementById('heartsOverlay');
+  overlay.classList.remove('active');
+  overlay.innerHTML = '';
+}
+
+// ============ MUSIC ============
+function toggleMusic() {
+  const audio = document.getElementById('bgMusic');
+  const btn = document.getElementById('musicToggle');
+  if (musicPlaying) {
+    audio.pause();
+    btn.textContent = '🔇';
+    musicPlaying = false;
+  } else {
+    audio.play().catch(() => {});
+    btn.textContent = '🎵';
+    musicPlaying = true;
+  }
+}
+
+// ============ SERVICE WORKER REGISTRATION (PWA) ============
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('sw.js').catch(() => {});
+  });
+}
+</script>
+
+</body>
+</html>
