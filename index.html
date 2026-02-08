@@ -927,7 +927,7 @@ html, body {
     <div class="ring-game-sub">Now for a little game...</div>
     <div class="ring-game-confession">
       Okay confession... I have NO idea what your ring size is 😅<br>
-      But first — which ring do you think is MY favorite? 👀
+      But first, which ring do you think is MY favorite? 👀
     </div>
 
     <div class="rings-grid" id="ringsGrid">
@@ -1317,11 +1317,11 @@ function pickRing(el) {
 function ringFits(fits) {
   const result = document.getElementById('tryonResult');
   if (fits) {
-    result.innerHTML = '🎉 It was meant to be! Just like us! 💍<br><br>This ring is my promise to you — forever and always.';
+    result.innerHTML = '🎉 It was meant to be! Just like us! 💍<br><br>This ring is my promise to you, forever and always.';
     launchConfetti();
     setTimeout(() => goToScreen(8), 3000);
   } else {
-    result.innerHTML = 'That\'s okay Mahi g 😂💕<br><br>This is just the beginning — we\'ll find you the PERFECT ring together. This one is my promise that I\'m yours, forever. 🤍';
+    result.innerHTML = 'That\'s okay Mahi g 😂💕<br><br>This is just the beginning, we\'ll find you the PERFECT ring together. This one is my promise that I\'m yours, forever. 🤍';
     setTimeout(() => {
       const btn = document.createElement('button');
       btn.className = 'btn';
